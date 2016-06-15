@@ -1,5 +1,8 @@
-PHP Typed Sanitizer (PHP类型净化器) [![](https://travis-ci.org/clazz/php-typed-sanitizer.svg)](https://travis-ci.org/clazz/php-typed-sanitizer)
+PHP Typed Sanitizer (PHP类型净化器)
 ===================
+
+ [![](https://travis-ci.org/clazz/php-typed-sanitizer.svg)](https://travis-ci.org/clazz/php-typed-sanitizer)
+ 
 如何安装？
 ----------
 
