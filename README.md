@@ -1,5 +1,16 @@
-PHP Typed Sanitizer (PHP类型净化器)
+PHP Typed Sanitizer (PHP类型净化器) [![](https://travis-ci.org/clazz/php-typed-sanitizer.svg)](https://travis-ci.org/clazz/php-typed-sanitizer)
 ===================
+如何安装？
+----------
+
+推荐使用composer进行安装：
+
+```sh
+composer require clazz/typed-sanitizer
+```
+
+使用说明
+--------
 
 这个净化器可以用于净化外部输入（用户输入、接口输入）。 啥也不说了，上段代码试试：
 
