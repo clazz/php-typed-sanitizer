@@ -1,0 +1,29 @@
+{
+    "name": "clazz/typed-sanitizer",
+    "description": "A Typed Sanitizer For PHP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Clarence",
+            "email": "clarence-pan@foxmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "mockery/mockery": "~0.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Clazz\\Typed\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Clazz\\Typed\\": "tests"
+        }
+    }
+}
