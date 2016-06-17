@@ -34,13 +34,14 @@ use Clazz\Typed\Exceptions\ValueTooShortException;
  * @method static JsonObjectType   jsonObject($fields=[])
  * @method static OneOfType        oneOf($types)
  * @method static ConstantType     constant($value)     // 常量类型
- * @method $this split
+ * @method static CommaSeparatedArrayListOfType commaSeparatedArrayListOf($type)
+ * @method $this split()
  * @method $this explode($delimiter)
  * @method $this implode($glue)
- * @method $this ucfirst
- * @method $this lcfirst
- * @method $this str_toupper
- * @method $this str_tolower
+ * @method $this ucfirst()
+ * @method $this lcfirst()
+ * @method $this str_toupper()
+ * @method $this str_tolower()
  *
  * @property $type string
  * @property $path string

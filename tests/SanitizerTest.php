@@ -434,4 +434,12 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
 
         return $singleData;
     }
+
+    public function test_CommaSeparatedArrayListOfType()
+    {
+        $this->assertEquals([1,2,3], Sanitizer::getSanitized('test', Type::commaSeparatedArrayListOf('int'), ['test' => '1,2,3']));
+        $this->assertEquals([1], Sanitizer::getSanitized('test', Type::commaSeparatedArrayListOf('int'), ['test' => '1']));
+        $this->assertEquals([], Sanitizer::getSanitized('test', Type::commaSeparatedArrayListOf('int'), ['test' => '']));
+        $this->assertEquals([], Sanitizer::getSanitized('test', Type::commaSeparatedArrayListOf('int'), ['test' => null]));
+    }
 }
