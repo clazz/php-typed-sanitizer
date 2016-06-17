@@ -11,9 +11,13 @@ class CommaSeparatedArrayListOfType extends ArrayType
     protected $enclosure;
     protected $escape;
 
-    public function __construct($type)
+    public function __construct($type, $delimeter=null, $enclosure=null, $escape=null)
     {
         parent::__construct();
+
+        $this->delimiter = $delimeter;
+        $this->enclosure = $enclosure;
+        $this->escape = $escape;
 
         $this->isListOf($type)->defaultValue([]);
     }
