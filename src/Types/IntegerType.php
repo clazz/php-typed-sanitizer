@@ -10,7 +10,7 @@ class IntegerType extends NumericType
     protected $pattern = '/^-?\d+$/';
     public function beforeApplyRules($value)
     {
-        if (preg_match($this->pattern, $value)) {
+        if (!is_object($value) && !is_array($value) && preg_match($this->pattern, $value)) {
             return intval($value);
         }
 

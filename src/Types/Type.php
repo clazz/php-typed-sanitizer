@@ -5,6 +5,7 @@ namespace Clazz\Typed\Types;
 use Clazz\Typed\Exceptions\BlankValueException;
 use Clazz\Typed\Exceptions\EmptyValueException;
 use Clazz\Typed\Exceptions\InvalidFormatException;
+use Clazz\Typed\Exceptions\InvalidTypeException;
 use Clazz\Typed\Exceptions\NullValueException;
 use Clazz\Typed\Exceptions\RequiredValueMissingException;
 use Clazz\Typed\Exceptions\ValueTooLongException;
@@ -235,7 +236,7 @@ class Type
 
     protected function isItBlank($value)
     {
-        return preg_match('/^\s*$/', $value);
+        return !is_object($value) && !is_array($value) && preg_match('/^\s*$/', $value);
     }
 
     /**
@@ -400,7 +401,16 @@ class Type
 
         $this->addRule(function ($value) {
             if (!is_null($this->minLength) || !is_null($this->maxLength)) {
-                $valueLen = mb_strlen($value);
+                if (is_array($value)){
+                    $valueLen = count($value);
+                } else if (!is_object($value)){
+                    $valueLen = mb_strlen($value);
+                } else if (empty($value)){
+                    $valueLen = 0;
+                } else {
+                    throw new InvalidTypeException($this, $value);
+                }
+
                 if (!is_null($this->minLength) && $valueLen < $this->minLength) {
                     throw new ValueTooShortException($this, $value);
                 }
@@ -424,11 +434,11 @@ class Type
     public function pattern($regPattern)
     {
         return $this->addRule(function ($value) use ($regPattern) {
-            if (!preg_match($regPattern, $value)) {
-                throw new InvalidFormatException($this, $value);
+            if (!is_object($value) && !is_array($value) && preg_match($regPattern, $value)) {
+                return $value;
             }
 
-            return $value;
+            throw new InvalidFormatException($this, $value);
         });
     }
 
