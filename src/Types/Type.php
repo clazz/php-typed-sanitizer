@@ -521,7 +521,9 @@ class Type
             || ($this->isNotEmpty && empty($value))
             || ($this->isNotNull && is_null($value))
         ) {
-            if ($this->isRequired) {
+            if ($this->hasDefaultValue) {
+                return $this->defaultValue;
+            } elseif ($this->isRequired) {
                 throw new RequiredValueMissingException($this, $value);
             } else {
                 return self::undefinedValue();
