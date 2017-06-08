@@ -9,7 +9,14 @@ class VerificationFailedException extends TypeMissMatchException
     protected $prompt = '校验失败！';
     protected $type;
     protected $value;
-    public function __construct(Type $type, $value)
+
+    /**
+     * VerificationFailedException constructor.
+     *
+     * @param Type  $type
+     * @param mixed $value
+     */
+    public function __construct(Type $type, $value='')
     {
         $this->type = $type;
         $this->value = $value;
@@ -17,11 +24,15 @@ class VerificationFailedException extends TypeMissMatchException
         if ($type->comment) {
             parent::__construct($type->comment);
         } else {
-            parent::__construct(strtr($this->prompt, [
-                '{what}' => $this->type->desc ?: $this->type->path,
-                '{type}' => $this->type->type,
-                '{value}' => json_encode($value),
-            ]));
+            parent::__construct(strtr($this->prompt, $this->getPromptParams()));
         }
+    }
+
+    protected function getPromptParams()
+    {
+        return [
+            '{what}' => $this->type->desc ?: $this->type->path,
+            '{type}' => $this->type->type,
+        ];
     }
 }

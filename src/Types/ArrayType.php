@@ -3,6 +3,7 @@
 namespace Clazz\Typed\Types;
 
 use Clazz\Typed\Exceptions\InvalidTypeException;
+use Clazz\Typed\Exceptions\TooManyFieldsException;
 
 /**
  * @property $fields array
@@ -12,6 +13,7 @@ class ArrayType extends Type
 {
     protected $type = 'array';
     protected $isList = false;
+    protected $noExtraFields = false;
     protected $fields = [];
     protected $defaultValue = [];
 
@@ -42,6 +44,25 @@ class ArrayType extends Type
     public function listOf($type)
     {
         return $this->isListOf($type);
+    }
+
+    /**
+     * 没有其他key(仅适用于非list方式的array)
+     * @return $this
+     */
+    public function noExtraFields()
+    {
+        $this->noExtraFields = true;
+        return $this;
+    }
+
+    /**
+     * 没有其他key(仅适用于非list方式的array)
+     * @return $this
+     */
+    public function hasNoExtraFields()
+    {
+        return $this->noExtraFields();
     }
 
     public function define($name, $definition = 'string')
@@ -121,6 +142,13 @@ class ArrayType extends Type
                 $result[$index] = $fieldType->sanitize($item);
             }
         } else {
+            if ($this->noExtraFields){
+                $extraFields = array_diff(array_keys($value), array_keys($this->fields));
+                if (!empty($extraFields)){
+                    throw new TooManyFieldsException($this, $value, $extraFields);
+                }
+            }
+
             foreach ($this->fields as $fieldName => $fieldType) {
                 $fieldType->path = ($this->path ? $this->path.'.' : '').$fieldName;
                 $fieldValue = array_key_exists($fieldName, $value) ? $value[$fieldName] : Type::undefinedValue();
